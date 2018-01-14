@@ -50,7 +50,6 @@ public class ArticleDetailFragment extends Fragment implements
 
     public static final String ARG_ITEM_ID = "item_id";
 
-    private int count = 0;
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
@@ -130,125 +129,12 @@ public class ArticleDetailFragment extends Fragment implements
         }
     }
     private void bindViews() {
-        count++;
-        Log.i(TAG, "bindViews #" + count);
         final TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         final TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         final TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
-//        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
-
         if (mCursor != null) {
             new BindViewsTask().execute();
-            /*
-            mRootView.setVisibility(View.VISIBLE);
-            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            Date publishedDate = parsePublishedDate();
-            bylineView.setText(Html.fromHtml(
-                    DateUtils.getRelativeTimeSpanString(
-                            publishedDate.getTime(),
-                            System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by <font color='#ffffff'>"
-                            + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                            + "</font>"));
-            bodyView.post(new Runnable() {
-                @Override
-                public void run() {
-                    bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)
-                            .replaceAll("\\.(\r\n|\n)", ".<br />")));
-                    ;
-                }
-            });
-            Picasso.with(getContext())
-                    .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
-                    .into(mPhotoView, new com.squareup.picasso.Callback() {
-                        @Override
-                        public void onSuccess() {
-                            Bitmap bitmap = ((BitmapDrawable) mPhotoView.getDrawable()).getBitmap();
-                            if (bitmap != null) {
-                                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                                    @Override
-                                    public void onGenerated(@NonNull Palette p) {
-                                        int primaryDark = getActivity().getResources().getColor(R.color.blue_700);
-                                        int primary = getActivity().getResources().getColor(R.color.blue_500);
-//                                        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
-                                        mRootView.findViewById(R.id.meta_bar).setBackgroundColor(p.getMutedColor(primary));
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });
-
-
-            final Handler h =  new Handler();
-            Thread t = new Thread() {
-                public void run() {
-                    h.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-                                Date publishedDate = parsePublishedDate();
-                                bylineView.setText(Html.fromHtml(
-                                        DateUtils.getRelativeTimeSpanString(
-                                                publishedDate.getTime(),
-                                                System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                                                DateUtils.FORMAT_ABBREV_ALL).toString()
-                                                + " by <font color='#ffffff'>"
-                                                + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                                + "</font>"));
-                                bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)
-                                        .replaceAll("\\.(\r\n|\n)", ".<br />")));
-                                ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                                        .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
-                                            @Override
-                                            public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                                                Bitmap bitmap = imageContainer.getBitmap();
-                                                if (bitmap != null) {
-                                                    Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                                                        @Override
-                                                        public void onGenerated(@NonNull Palette p) {
-                                                            int primaryDark = getResources().getColor(R.color.blue_700);
-                                                            int primary = getResources().getColor(R.color.blue_500);
-//                                        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
-                                                            mRootView.findViewById(R.id.meta_bar).setBackgroundColor(p.getMutedColor(primary));
-
-
-                                                        }
-                                                    });
-                                                    mPhotoView.setImageBitmap(imageContainer.getBitmap());
-//                                ((ProgressBar) mRootView.findViewById(R.id.pb_loading_details))
-//                                        .animate().alpha(0).setDuration(300).start();
-
-                                                    mRootView.animate().alpha(1).setDuration(300).start();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onErrorResponse(VolleyError volleyError) {
-
-                                            }
-                                        });
-                            } finally {
-                                Log.i(TAG, "bindViews for article " + titleView.getText() + " complete");
-                            }
-                        }
-                    });
-                }
-            };
-            t.run();
-            */
-//            bodyView.setText("This is some text");
-//            bodyView.setText(Html.fromHtml(
-//                    mCursor.getString(ArticleLoader.Query.BODY)).toString());
-//                            .replaceAll("\\.(\r\n|\n)", ".<br />")));
-
         } else {
 
             titleView.setText("N/A");
